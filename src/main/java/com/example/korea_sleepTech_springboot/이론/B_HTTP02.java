@@ -1,6 +1,6 @@
 package com.example.korea_sleepTech_springboot.이론;
 
-public class HTTP02 {
+public class B_HTTP02 {
     /*
     cf) 인터넷의 기본 개념
         1) IP(Internet Protocol) 주소: 각 장치의 고유 주소

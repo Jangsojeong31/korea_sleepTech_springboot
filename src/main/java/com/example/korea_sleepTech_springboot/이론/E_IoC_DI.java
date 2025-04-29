@@ -3,7 +3,7 @@ package com.example.korea_sleepTech_springboot.이론;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-public class IoC_DI {
+public class E_IoC_DI {
     /*
     제어의 역전(IoC) & 의존성 주입(DI)
 

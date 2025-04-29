@@ -1,6 +1,6 @@
 package com.example.korea_sleepTech_springboot.이론;
 
-public class SpringBoot {
+public class D_SpringBoot {
     /*
     Spring vs SpringBoot
 
@@ -15,7 +15,5 @@ public class SpringBoot {
      - XML 설정 없이 Java 코드 기반 설정 가능 (Annotation 기반)
      - 내장 WAS(Tomcat 등)를 포함
      - JAR 파일만으로 서버 실행 및 배포 가능 (외부 서버 설치 불필요)
-
-
      */
 }

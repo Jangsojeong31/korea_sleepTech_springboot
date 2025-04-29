@@ -1,6 +1,6 @@
 package com.example.korea_sleepTech_springboot.이론;
 
-public class Servlet_SpringBoot {
+public class C_Servlet_SpringBoot {
     /*
     1. 웹 서블릿(Servlet)에서 HTTP 통신
 
