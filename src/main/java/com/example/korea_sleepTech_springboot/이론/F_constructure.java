@@ -15,6 +15,4 @@ public class F_constructure {
     // 3) Persistence 계층
     // : repository
     //  - 모든 DB 관련 로직 처리 (DB에 접근하는 객체 사용 가능)
-
-
 }

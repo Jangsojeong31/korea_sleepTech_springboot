@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 public class E_IoC_DI {
-    /*
-    제어의 역전(IoC) & 의존성 주입(DI)
 
-     */
+    // 제어의 역전(IoC) & 의존성 주입(DI)
+
     // 1. 전통적인 자바 프로그래밍 방식
     class Book1 {
         private String title;
@@ -79,7 +78,7 @@ public class E_IoC_DI {
     // : 클래스가 필요로 하는 객체(의존성)를 외부에서 주입해주는 방식
     // - 제어의 역전을 구현하기 위한 방법
     // - 객체 간의 의존성을 낮추고, 유연성과 재사용성을 높임
-    // 2-1. 주입의 종류 : 생성자 주입(권장), 필드 주입, 세터 주입 등의 방식으로 이루어짐
+    // 2-1. 주입의 종류 : 생성자 주입(권장), 필드 주입, Setter 주입 등의 방식으로 이루어짐
 
 }
 
