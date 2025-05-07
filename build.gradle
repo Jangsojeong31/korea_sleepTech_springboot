@@ -32,11 +32,15 @@ dependencies {
 	// 프로젝트 유효성 검사를 위한 의존성 입력
 	implementation('jakarta.validation:jakarta.validation-api:3.1.0')
 
+	// Validation API가 인터페이스 정의만 포함 (실제 구현체 x)
+	// : Hibernate Validator 추가 실제 @Valid 애너테이션에 대한 동작을 명시
+	implementation('org.hibernate.validator:hibernate-validator:8.0.0.Final')
+
 	// H2 database를 runtime 환경에서만 사용: 개발, 테스트용으로 쓰이는 메모리 | 로컬 파일 기반의 임시 DB
 	runtimeOnly 'com.h2database:h2'
 	// MySQL Driver
 	runtimeOnly 'com.mysql:mysql-connector-j'
-	// DB 연동할 떄 JPA(Hibernate 기반)를 사용
+	// DB 연동할 때 JPA(Hibernate 기반)를 사용
 	// : Repository 인터페이스만 만들어도 기본 CRUD 기능을 제공
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
