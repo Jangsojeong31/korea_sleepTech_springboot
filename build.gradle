@@ -27,7 +27,10 @@ dependencies {
 	// 프로젝트 개발에 필요한 의존성 기능을 입력
 
 	// 웹 애플리케이션 개발 시 반드시 필요: 내장 톰캣 서버를 실행, 스프링 어노테이션 사용 가능
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// 프로젝트 유효성 검사를 위한 의존성 입력
+	implementation('jakarta.validation:jakarta.validation-api:3.1.0')
 
 	// H2 database를 runtime 환경에서만 사용: 개발, 테스트용으로 쓰이는 메모리 | 로컬 파일 기반의 임시 DB
 	runtimeOnly 'com.h2database:h2'
@@ -35,7 +38,7 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	// DB 연동할 떄 JPA(Hibernate 기반)를 사용
 	// : Repository 인터페이스만 만들어도 기본 CRUD 기능을 제공
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
