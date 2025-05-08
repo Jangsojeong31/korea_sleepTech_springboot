@@ -5,6 +5,7 @@ import com.example.korea_sleepTech_springboot.dto.reponse.PostDetailResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.PostListResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.ResponseDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostCreateRequestDto;
+import com.example.korea_sleepTech_springboot.dto.request.PostUpdateRequestDto;
 import com.example.korea_sleepTech_springboot.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,5 +45,22 @@ public class PostController {
     public ResponseEntity<ResponseDto<List<PostListResponseDto>>> getAllPosts() {
         ResponseDto<List<PostListResponseDto>> posts = postService.getAllPosts();
         return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
+
+    // 4) 게시글 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseDto<PostDetailResponseDto>> updatePost(
+            @PathVariable Long id,
+            @Valid @RequestBody PostUpdateRequestDto dto
+    ){
+        ResponseDto<PostDetailResponseDto> response = postService.updatePost(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    // 5) 게시글 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseDto<Void>> deletePost(@PathVariable Long id){
+        ResponseDto<Void> response = postService.deletePost(id);
+        return ResponseEntity.noContent().build();
     }
 }

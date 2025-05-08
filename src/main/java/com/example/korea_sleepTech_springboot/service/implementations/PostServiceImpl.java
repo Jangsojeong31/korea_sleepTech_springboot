@@ -6,6 +6,7 @@ import com.example.korea_sleepTech_springboot.dto.reponse.PostDetailResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.PostListResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.ResponseDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostCreateRequestDto;
+import com.example.korea_sleepTech_springboot.dto.request.PostUpdateRequestDto;
 import com.example.korea_sleepTech_springboot.entity.D_Post;
 import com.example.korea_sleepTech_springboot.repository.PostRepository;
 import com.example.korea_sleepTech_springboot.service.PostService;
@@ -20,7 +21,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
-
 
     private final PostRepository postRepository;
 
@@ -56,7 +56,7 @@ public class PostServiceImpl implements PostService {
         PostDetailResponseDto responseDto = null;
 
         D_Post post = postRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(ResponseMessage.NOT_EXIST_POST + id));
 
         List<CommentResponseDto> comments = post.getComments().stream() // post.getComments()는 List<D_Comment>를 반환하기 때문에 변환이 필요
                 .map(comment -> CommentResponseDto.builder()
@@ -97,5 +97,51 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
 
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, responseDtos);
+    }
+
+    // 4) 수정
+    @Override
+    @Transactional
+    public ResponseDto<PostDetailResponseDto> updatePost(Long id, PostUpdateRequestDto dto) {
+        PostDetailResponseDto responseDto = null;
+
+        D_Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ResponseMessage.NOT_EXIST_POST + id));
+
+        post.setTitle(dto.getTitle());
+        post.setContent(dto.getContent());
+
+        D_Post updatedPost = postRepository.save(post);
+
+        responseDto = PostDetailResponseDto.builder()
+                .id(updatedPost.getId())
+                .title(updatedPost.getTitle())
+                .content(updatedPost.getContent())
+                .author(updatedPost.getAuthor())
+                .comments(updatedPost.getComments().stream() // D_Comment -> CommentResponseDto로 변환
+                        .map(comment -> CommentResponseDto.builder()
+                                .id(comment.getId())
+                                .postId(comment.getPost().getId())
+                                .content(comment.getContent())
+                                .commenter(comment.getCommenter())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, responseDto);
+    }
+
+    // 5) 삭제
+    @Override
+    public ResponseDto<Void> deletePost(Long id) {
+        // 삭제의 경우: findById로 반환 받을 필요 없이 바로 삭제 하면 됨 => 존재하는지 여부 확인 후 삭제
+        if (!postRepository.existsById(id)){ // -> 예외 처리
+            // .existsByIDd(PK값): 존재하면 true
+            throw new EntityNotFoundException(ResponseMessage.NOT_EXIST_POST + id);
+        }
+
+        postRepository.deleteById(id);
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, null);
+
     }
 }
