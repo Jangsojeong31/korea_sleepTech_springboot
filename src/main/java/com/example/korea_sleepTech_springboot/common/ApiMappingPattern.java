@@ -7,4 +7,5 @@ public class ApiMappingPattern {
     public static final String BOOK_API = "/api/v1/books";
 
     public static final String POST_API = "/api/v1/posts";
+    public static final String COMMENT_API = "/api/v1/comments";
 }

@@ -2,6 +2,7 @@ package com.example.korea_sleepTech_springboot.controller;
 
 import com.example.korea_sleepTech_springboot.common.ApiMappingPattern;
 import com.example.korea_sleepTech_springboot.dto.reponse.PostDetailResponseDto;
+import com.example.korea_sleepTech_springboot.dto.reponse.PostListResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.ResponseDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostCreateRequestDto;
 import com.example.korea_sleepTech_springboot.service.PostService;
@@ -9,10 +10,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ApiMappingPattern.POST_API)
@@ -31,4 +31,18 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
 
+    // 2) 단건 조회 (댓글 포함 조회)
+    // @params: 조회하고자 하는 댓글을 지정하는 고유 id - PathVariable
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDto<PostDetailResponseDto>> getPostById(@PathVariable Long id) {
+        ResponseDto<PostDetailResponseDto> post = postService.getPostById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(post);
+    }
+
+    // 3) 전체 조회 (댓글 제외)
+    @GetMapping
+    public ResponseEntity<ResponseDto<List<PostListResponseDto>>> getAllPosts() {
+        ResponseDto<List<PostListResponseDto>> posts = postService.getAllPosts();
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
 }
