@@ -3,8 +3,6 @@ package com.example.korea_sleepTech_springboot.dto.reponse;
 import lombok.*;
 
 @Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class PostListResponseDto {
