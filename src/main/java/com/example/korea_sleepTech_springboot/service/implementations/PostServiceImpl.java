@@ -150,4 +150,44 @@ public class PostServiceImpl implements PostService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, null);
 
     }
+
+    // 6) 특정 작성자의 모든 게시글 조회
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseDto<List<PostListResponseDto>> getPostByAuthor(String author) {
+        List<PostListResponseDto> responseDtos = null;
+
+        List<D_Post> posts = postRepository.findByAuthor(author);
+
+        responseDtos = posts.stream()
+                .map(post -> PostListResponseDto.builder()
+                        .id(post.getId())
+                        .title(post.getTitle())
+                        .content(post.getContent())
+                        .author(post.getAuthor())
+                        .build())
+                .collect(Collectors.toList());
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, responseDtos);
+    }
+
+    // 7) 특정 키워드로 제목 검색
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseDto<List<PostListResponseDto>> searchPostsByTitle(String keyword) {
+        List<PostListResponseDto> responseDtos = null;
+
+        List<D_Post> posts = postRepository.findByTitleIgnoreCaseContaining(keyword);
+
+        responseDtos = posts.stream()
+                .map(post -> PostListResponseDto.builder()
+                        .id(post.getId())
+                        .title(post.getTitle())
+                        .content(post.getContent())
+                        .author(post.getAuthor())
+                        .build())
+                .collect(Collectors.toList());
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, responseDtos);
+    }
 }
