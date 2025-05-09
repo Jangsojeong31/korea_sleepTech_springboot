@@ -3,6 +3,7 @@ package com.example.korea_sleepTech_springboot.controller;
 import com.example.korea_sleepTech_springboot.common.ApiMappingPattern;
 import com.example.korea_sleepTech_springboot.dto.reponse.PostDetailResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.PostListResponseDto;
+import com.example.korea_sleepTech_springboot.dto.reponse.PostWithCommentCountResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.ResponseDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostCreateRequestDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostUpdateRequestDto;
@@ -81,6 +82,14 @@ public class PostController {
 
     // 8) 댓글이 가장 많은 상위 5개의 게시글 조회
     @GetMapping("/top-comments")
-    public ResponseEntity<ResponseDto<List<PostListResponseDto>>> getTop5Post
-            response = postService.
+    public ResponseEntity<ResponseDto<List<PostWithCommentCountResponseDto>>> getTop5PostByComments() {
+        ResponseDto<List<PostWithCommentCountResponseDto>> response = postService.getTop5PostByComments();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    // 9) 특정 키워드를 포함하는 댓글이 달린 게시글 조회
+    //      ex. "스프링"이라는 키워드를 포함한 댓글이 달린 모든 게시글을 조회
+
+    // 10) 특정 작성자의 게시글 중, 댓글 수가 일정 개수 이상인 게시글 조회
+    //      ex. 특정 author가 작성한 게시글 중에서 댓글이 3개 이상인 게시글 조회
 }

@@ -1,6 +1,9 @@
 package com.example.korea_sleepTech_springboot.dto.reponse;
 
-import lombok.*;
+//import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 /*
 cf) 응답 DTO는 생성 시점에 모든 데이터가 완성되어야 반환
     >> 기본 생성자가 필요 없음 (@NoArgConstructor)
@@ -50,6 +53,4 @@ public class CommentResponseDto {
             return new CommentResponseDto(id, postId, content, commenter);
         }
     }
-
-
 }

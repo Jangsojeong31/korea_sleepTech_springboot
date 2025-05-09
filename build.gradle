@@ -47,6 +47,7 @@ dependencies {
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+//	testAnnotationProcessor('org.projectlombok:lombok')
 
 	// 단위 테스트, 통합 테스트를 쉽게 만들 수 있게 도와주는 라이브러리 모음
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

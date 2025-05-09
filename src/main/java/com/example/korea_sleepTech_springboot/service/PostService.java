@@ -2,6 +2,7 @@ package com.example.korea_sleepTech_springboot.service;
 
 import com.example.korea_sleepTech_springboot.dto.reponse.PostDetailResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.PostListResponseDto;
+import com.example.korea_sleepTech_springboot.dto.reponse.PostWithCommentCountResponseDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.ResponseDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostCreateRequestDto;
 import com.example.korea_sleepTech_springboot.dto.request.PostUpdateRequestDto;
@@ -20,4 +21,7 @@ public interface PostService {
 
     ResponseDto<List<PostListResponseDto>> getPostByAuthor(String author);
     ResponseDto<List<PostListResponseDto>> searchPostsByTitle(String keyword);
+
+
+    ResponseDto<List<PostWithCommentCountResponseDto>> getTop5PostByComments();
 }
