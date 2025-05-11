@@ -201,9 +201,9 @@ public class PostServiceImpl implements PostService {
                         // JPA 데이터 반환이 Object[] 타입
                         // : 내부의 데이터는 Object로 명시 >> 각 타입으로 명시적 형 변환(강제 형 변환)
                         .id(((Number)row[0]).longValue())
-                        .title((String) row[1])
+                        .title((String)row[1])
                         .content((String)row[2])
-                        .author((String) row[3])
+                        .author((String)row[3])
                         .commentCount(((Number)row[4]).intValue())
                         .build())
                 .collect(Collectors.toList());

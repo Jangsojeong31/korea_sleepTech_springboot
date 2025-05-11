@@ -38,16 +38,16 @@ public interface PostRepository extends JpaRepository<D_Post, Long> {
 ///    @Query("SELECT p FROM D_Post p WHERE p.title LIKE %:keyword%")
 ///   List<D_Post> searchByTitle(@Param("keyword") String keyword)
 
-    // 3.
-    @Query(value = """ 
-            SELECT p.id, p.title, p.content, p.author, COUNT(c.id) AS commentCount
-            FROM post p 
-                LEFT JOIN comment c 
-                ON p.id = c.post_id 
-            GROUP BY p.id 
-            ORDER BY commentCount DESC 
-            LIMIT 5
-            """, nativeQuery = true)
+    // === 3. 댓글이 가장 많은 상위 5개의 게시글 조회 === //
+    @Query(value = """
+                    SELECT p.id, p.title, p.content, p.author, COUNT(c.id) AS commentCount
+                    FROM post p 
+                        LEFT JOIN comment c 
+                        ON p.id = c.post_id 
+                    GROUP BY p.id, p.title, p.content, p.author
+                    ORDER BY commentCount DESC 
+                    LIMIT 5
+               """, nativeQuery = true)
     List<Object[]> findTop5ByOrderByCommentsSizeDesc(); // Object 클래스는 모든 클래스의 최상위 클래스
 
 }
