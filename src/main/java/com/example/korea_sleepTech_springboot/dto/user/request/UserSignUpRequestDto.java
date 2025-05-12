@@ -17,4 +17,5 @@ public class UserSignUpRequestDto {
     private String password;
     @NotNull
     private String confirmPassword; // 비밀번호 확인 (비즈니스 로직에서만 사용할 필드)
+
 }

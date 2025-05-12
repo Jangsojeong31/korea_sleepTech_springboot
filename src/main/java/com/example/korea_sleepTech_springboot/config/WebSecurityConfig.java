@@ -31,7 +31,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 // : 해당 클래스가 Spring의 설정 클래스로 사용됨을 명시 (Spring이 관리하는 객체를 생성하는 데 사용)
 @EnableWebSecurity
-// : Spring Security의 웹 보완을 활성화
+// : Spring Security의 웹 보안을 활성화
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     /*
