@@ -29,6 +29,15 @@ dependencies {
 	// 웹 애플리케이션 개발 시 반드시 필요: 내장 톰캣 서버를 실행, 스프링 어노테이션 사용 가능
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	// 스프링 시큐리티 사용 스타터
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// JWT 의존성 추가
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5' // JWT 생성을 위한 기본 API
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'	// JWT 처리에 필요한 구현체
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'	// JWT Payload를 JSON 형식으로 변환하는 라이브러리
+
 	// 프로젝트 유효성 검사를 위한 의존성 입력
 	implementation('jakarta.validation:jakarta.validation-api:3.1.0')
 
