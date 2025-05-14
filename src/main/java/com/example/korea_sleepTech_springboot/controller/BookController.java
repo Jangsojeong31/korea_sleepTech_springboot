@@ -10,6 +10,7 @@ import com.example.korea_sleepTech_springboot.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
@@ -36,6 +37,7 @@ public class BookController {
     }
 
     // 2) READ - 전체 책 조회
+    @PreAuthorize("hasRole('USER')") // 경로 진입 전 권한 확인
     @GetMapping
     public ResponseEntity<List<BookResponseDto>> getAllBooks() {
         List<BookResponseDto> books = bookService.getAllBooks();

@@ -106,10 +106,10 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers( // : 특정 요청과 일치하는 url에 대한 엑세스
                                         // 특정 경로에 대한 엑세스 설정 (토큰없이 가능)
-                                        new AntPathRequestMatcher("/api/v1/auth/**"),
-                                        new AntPathRequestMatcher("/api/v1/books/**")
-                                )
-                                .permitAll() // : 인증 처리 없이 접근 가능 (누구나 접근 가능 - 인증, 인가 없이 접근 가능)
+                                        new AntPathRequestMatcher("/api/v1/auth/**")
+                                ).permitAll() // : 인증 처리 없이 접근 가능 (누구나 접근 가능 - 인증, 인가 없이 접근 가능)
+                                .requestMatchers("api/v1/user/**").hasRole("USER") // USER 권한이 있어야 "api/v1/user/**" 이용 가능
+                                .requestMatchers("api/v1/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                         // 위에서 설정한 url 이외의 요청에 대해 + 별도의 인가는 필요 X + 인증이 성공된 상태여야 접근 가능 (토큰이 필요)
                 )

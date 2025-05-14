@@ -11,8 +11,8 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "user_roles")
+//@Entity
+//@Table(name = "user_roles")
 @NoArgsConstructor
 public class UserRole {
     // 복합키

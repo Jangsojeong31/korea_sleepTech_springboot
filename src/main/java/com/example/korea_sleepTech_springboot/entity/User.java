@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,7 +43,7 @@ public class User implements UserDetails {
     private LocalDateTime updatedAt;
 
     // 다대다 관계 매핑 필드
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST) // 엔티티를 영속화(저장)할 때 하위 엔티티도 같이 유지
     // cf) Lazy(지연로딩) VS Eager(즉시로딩)
     // 지연로딩: 해당 데이터와 해당 필드가 같이 사용되지 않는 경우
     // 즉시로딩: 해당 데이터와 해당 필드가 동시에 사용되는 경우
