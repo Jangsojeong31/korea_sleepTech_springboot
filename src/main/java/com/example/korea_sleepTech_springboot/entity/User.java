@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -41,11 +43,25 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // 다대다 관계 매핑 필드
+    @ManyToMany(fetch = FetchType.EAGER)
+    // cf) Lazy(지연로딩) VS Eager(즉시로딩)
+    // 지연로딩: 해당 데이터와 해당 필드가 같이 사용되지 않는 경우
+    // 즉시로딩: 해당 데이터와 해당 필드가 동시에 사용되는 경우
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
+    // Set 컬렉션 프레임워크: 중복 x, 순서 x - 권한 설정에 주로 List 보다 Set 이용
+
     @Builder
-    public User(String email, String password, LocalDateTime createdAt){
+    public User(String email, String password, LocalDateTime createdAt, Set<Role> roles){
         this.email = email;
         this.password = password;
         this.createdAt = createdAt;
+        this.roles = roles;
     }
 
     // --------------------------------------------------- //
@@ -58,7 +74,13 @@ public class User implements UserDetails {
         // ex) ROLE_USER, ROLE_ADMIN 등의 역할을 설정하여 반환
 
         // 해당 코드는 "user"라는 기본 권한만 설정
-        return List.of(new SimpleGrantedAuthority("user"));
+//        return List.of(new SimpleGrantedAuthority("user"));
+
+        // 사용자의 Role을 Spring Security가 인식할 수 있도록 변환
+        // ex) "USER" -> "ROLE_USER" (ROLE_을 인식)
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
+                .collect(Collectors.toSet()); // toSet() 주의
     }
 
     @Override
@@ -74,4 +96,35 @@ public class User implements UserDetails {
         // - Spring Security가 로그인 처리 시 이 값을 통해 사용자 조회
         return email;
     }
+
+    // 계정 만료 여부(기본값 true: 만료되지 않음)
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    // 계정 잠김 여부(기본값 true: 잠기지 않음)
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    // 인증 정보 만료 여부
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    // 계정 활성화 여부
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
+
+// cf) user_roles 테이블 Entity
+// : 별도로 생성하지 않아도 가능
+// >> Spring JPA에서 다대다(@ManyToMany) 관계는 기본적으로 중간 테이블을 자동 관리
+
+// +) user_role 테이블을 엔티티로 만들어야 하는 경우
+// : 중간 테이블에 추가 정보가 존재하는 경우 (ex. 역할 부여 날짜(assigned_at), 역할의 상태(is_active), 권한 부여자 정보(assigned_by) 등)
