@@ -12,3 +12,4 @@ public interface UserService {
 
     ResponseDto<Void> deleteUser(String userEmail);
 }
+
