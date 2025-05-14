@@ -78,6 +78,8 @@ public class User implements UserDetails {
         // 사용자의 Role을 Spring Security가 인식할 수 있도록 변환
         // ex) "USER" -> "ROLE_USER" (ROLE_을 인식)
         return roles.stream()
+                // 로그인 후 인증된 사용자의 권한을 Spring Security에 전달
+                // : hasRole() 방식과 호환되기 위한 설정
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
                 .collect(Collectors.toSet()); // toSet() 주의
     }
