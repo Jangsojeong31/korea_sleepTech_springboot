@@ -4,9 +4,11 @@ import com.example.korea_sleepTech_springboot.entity.D_Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface PostRepository extends JpaRepository<D_Post, Long> {
     // === 1. 특정 작성자의 모든 게시글 조회 === //
     // 방법 1) 쿼리 메서드 (SQL문: SELECT * FROM D_Post WHERE author = ?)

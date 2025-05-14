@@ -44,6 +44,6 @@ public class AuthController {
     @PostMapping(POST_SIGN_IN)
     public ResponseEntity<ResponseDto<UserSignInResponseDto>> login(@Valid @RequestBody UserSignInRequestDto dto) {
         ResponseDto<UserSignInResponseDto> response = authService.login(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

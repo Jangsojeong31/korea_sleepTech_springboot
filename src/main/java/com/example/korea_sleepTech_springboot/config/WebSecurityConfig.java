@@ -105,12 +105,13 @@ public class WebSecurityConfig {
                 // 요청 인증 및 권한 부여 설정
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers( // : 특정 요청과 일치하는 url에 대한 엑세스
-                                        // 특정 경로에 대한 엑세스 설정
-                                        new AntPathRequestMatcher("/api/v1/auth/**")
+                                        // 특정 경로에 대한 엑세스 설정 (토큰없이 가능)
+                                        new AntPathRequestMatcher("/api/v1/auth/**"),
+                                        new AntPathRequestMatcher("/api/v1/books/**")
                                 )
                                 .permitAll() // : 인증 처리 없이 접근 가능 (누구나 접근 가능 - 인증, 인가 없이 접근 가능)
                                 .anyRequest().authenticated()
-                        // 위에서 설정한 url 이외의 요청에 대해 + 별도의 인가는 필요 X + 인증이 성공된 상태여야 접근 가능
+                        // 위에서 설정한 url 이외의 요청에 대해 + 별도의 인가는 필요 X + 인증이 성공된 상태여야 접근 가능 (토큰이 필요)
                 )
                 // JWT 인증 필터를 UsernamePasswordAuthenticationFilter 이전에 추가
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

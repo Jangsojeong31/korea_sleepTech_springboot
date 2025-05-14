@@ -17,6 +17,7 @@ import java.util.List;
 //      - AccessLevel.PROTECTED를 통해 외부에서 new 키워드로 객체 생성 불가
 //      - JPA는 기본 생성자가 반드시 필요하지만, 외부에서의 임의 생성을 방지
 @Getter
+@Setter
 public class User implements UserDetails {
     // UserDetails
     // : Spring Security의 UserDetails 인터페이스를 구현

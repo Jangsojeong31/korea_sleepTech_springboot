@@ -10,6 +10,7 @@ import com.example.korea_sleepTech_springboot.entity.User;
 import com.example.korea_sleepTech_springboot.provider.JwtProvider;
 import com.example.korea_sleepTech_springboot.repository.UserRepository;
 import com.example.korea_sleepTech_springboot.service.AuthService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtProvider jwtProvider;
 
+    // 회원가입
     @Override
     public ResponseDto<UserSignUpResponseDto> signup(UserSignUpRequestDto dto) {
         String email = dto.getEmail();
@@ -58,22 +60,27 @@ public class AuthServiceImpl implements AuthService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    // 로그인
     @Override
     public ResponseDto<UserSignInResponseDto> login(UserSignInRequestDto dto) {
         String email = dto.getEmail();
         String password = dto.getPassword();
 
         UserSignInResponseDto data = null;
-        User user = null;
+//        User user = null;
 
         int exprTime = jwtProvider.getExpiration();;
 
-        user = userRepository.findByEmail(email)
-                .orElseThrow(null);
+//        user = userRepository.findByEmail(email)
+//                .orElseThrow(null);
+//
+//        if (user == null) {
+//            return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_USER);
+//        }
 
-        if (user == null) {
-            return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_USER);
-        }
+        // 예외 처리
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(ResponseMessage.NOT_EXIST_USER));
 
         if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
             // .matches(평문 비밀번호, 암호화된 비밀번호)
