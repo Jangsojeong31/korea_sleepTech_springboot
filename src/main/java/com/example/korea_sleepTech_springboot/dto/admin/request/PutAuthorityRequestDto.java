@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PromoteToAdminRequestDto {
+public class PutAuthorityRequestDto {
     private String email;
 }
