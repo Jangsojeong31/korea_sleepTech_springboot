@@ -6,6 +6,7 @@ package com.example.korea_sleepTech_springboot.common;
 public class ApiMappingPattern {
     public static final String AUTH_API = "api/v1/auth"; // 단수처리
     public static final String USER_API = "api/v1/users";
+    public static final String ADMIN_API = "api/v1/admin";
 
     public static final String BOOK_API = "/api/v1/user/books";
 
