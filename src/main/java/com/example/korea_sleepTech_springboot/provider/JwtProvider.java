@@ -38,6 +38,7 @@ public class JwtProvider {
     // 환경 변수에 지정한 비밀키와 만료 시간을 가져옴
     private final Key key; // JWT 서명에 사용할 암호키 저장 변수
     private final int jwtExpirationMs; // JWT 토큰의 만료 시간을 저장
+    private long jwtEmailExpirationMs;
 
     public int getExpiration() {
         return jwtExpirationMs;
@@ -46,7 +47,8 @@ public class JwtProvider {
 
     public JwtProvider(
         @Value("${jwt.secret}") String secret,
-        @Value("${jwt.expiration}") int jwtExpirationMs
+        @Value("${jwt.expiration}") int jwtExpirationMs,
+        @Value("${jwt.email-expiration-ms}") long jwtEmailExpirationMs
     ){
         // 생성자: JWTProvider 객체 생성 시 비밀 키와 만료시간을 초기화
 
@@ -71,6 +73,15 @@ public class JwtProvider {
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs)) // 현재 시간에 만료 시간을 더해 토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256) // HMAC-SHA256 알고리즘으로 생성된 비밀키로 서명
                 .compact(); // JWT를 최종적으로 직렬화하여 문자열로 반환
+    }
+
+    public String generateEmailValidToken(String username) {
+        return Jwts.builder()
+                .claim("username", username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtEmailExpirationMs))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
     /*
