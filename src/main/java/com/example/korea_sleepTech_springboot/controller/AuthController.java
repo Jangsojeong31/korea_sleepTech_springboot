@@ -54,18 +54,19 @@ public class AuthController {
     // 3) 이메일 전송
     @PostMapping("/send-email")
     public Mono<ResponseEntity<String>> sendEmail(@Valid @RequestBody SendMailRequestDto dto) {
+        return mailService.sendSimpleMessage(dto.getEmail());
 
     }
 
-    // 4)
+    // 4) 이메일 인증
     @GetMapping("/verify")
     public Mono<ResponseEntity<String>> verifyEmail(@RequestParam String token) {
         return mailService.verifyEmail(token);
     }
 
-
+    // 5) 비밀번호 재설정
     @PostMapping("/reset-password")
     public Mono<ResponseEntity<String>> resetPassword(@Valid @RequestBody PasswordResetRequestDto dto) {
-
+        return authService.resetPassword(dto);
     }
 }

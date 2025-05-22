@@ -1,6 +1,7 @@
 package com.example.korea_sleepTech_springboot.service.implementations;
 
 import com.example.korea_sleepTech_springboot.common.ResponseMessage;
+import com.example.korea_sleepTech_springboot.dto.auth.PasswordResetRequestDto;
 import com.example.korea_sleepTech_springboot.dto.reponse.ResponseDto;
 import com.example.korea_sleepTech_springboot.dto.user.request.UserSignInRequestDto;
 import com.example.korea_sleepTech_springboot.dto.user.request.UserSignUpRequestDto;
@@ -14,8 +15,10 @@ import com.example.korea_sleepTech_springboot.repository.UserRepository;
 import com.example.korea_sleepTech_springboot.service.AuthService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -115,5 +118,10 @@ public class AuthServiceImpl implements AuthService {
         data = new UserSignInResponseDto(token, user, exprTime);
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
+    }
+
+    @Override
+    public Mono<ResponseEntity<String>> resetPassword(PasswordResetRequestDto dto) {
+        return null;
     }
 }
