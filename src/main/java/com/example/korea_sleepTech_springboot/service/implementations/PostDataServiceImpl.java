@@ -23,9 +23,10 @@ import java.util.UUID;
 public class PostDataServiceImpl implements PostDataService {
     private final PostDataRepository postDataRepository;
     private final UploadFIleRepository uploadFIleRepository;
-    private String uploadDir;
 
     @Value("${file.upload-dir}")
+    private String uploadDir;
+
     @Override
     public ResponseDto<PostResponseDto> createPost(PostRequestDto dto, MultipartFile file) throws IOException {
         PostResponseDto data = null;
@@ -65,7 +66,7 @@ public class PostDataServiceImpl implements PostDataService {
         uf.setTargetId(targetId);
         uf.setTargetType(type);
 
-
+        uploadFIleRepository.save(uf);
 
     }
 }
