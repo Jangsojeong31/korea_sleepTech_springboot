@@ -53,10 +53,10 @@ public class MailSerivceImpl implements MailService {
         // 블로킹 코드를 비동기 흐름 안에서 안전하게 실행하기 위해 사용
         // : 내부에서 예외 발생 가능성이 있는 동기 코드(JWT 생성, 이메일 생성/발송 등)를 넣고 Mono로 감싼다.
         return Mono.fromCallable(() -> {
-        String token = jwtProvider.generateEmailValidToken(email);
-        MimeMessage message = createMail(email, token);
-        javaMailSender.send(message);
-        return ResponseEntity.ok("인증 이메일이 전송되었습니다.");
+            String token = jwtProvider.generateEmailValidToken(email);
+            MimeMessage message = createMail(email, token);
+            javaMailSender.send(message);
+            return ResponseEntity.ok("인증 이메일이 전송되었습니다.");
             // 예외 처리
         }).onErrorResume(e -> Mono.just(
                 ResponseEntity.badRequest().body("이메일 전송 실패: " + e.getMessage()))
