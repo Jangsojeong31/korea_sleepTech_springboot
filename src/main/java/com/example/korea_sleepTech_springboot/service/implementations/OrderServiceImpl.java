@@ -73,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
                     .build());
         }
 
-        orderItemRepository.saveAll(items);
+        orderItemRepository.saveAll(items); // 리스트로 등록
 
         data = OrderResponseDto.builder()
                 .orderId(order.getId())
