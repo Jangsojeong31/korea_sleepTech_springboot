@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderLogRepository extends JpaRepository<OrderLog, Long> {
 //    Stock findByProduct_Id(Long productId);
+
 }

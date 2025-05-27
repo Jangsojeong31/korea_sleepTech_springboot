@@ -7,13 +7,14 @@ import com.example.korea_sleepTech_springboot.dto.reponse.ResponseDto;
 import com.example.korea_sleepTech_springboot.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ApiMappingPattern.ORDER_API)
@@ -22,6 +23,7 @@ public class OrderController {
     private final OrderService orderService;
 
     private static final String PLACE_ORDER = "/place";
+    private static final String GET_SUMMARY = "/summary/{orderId}";
 
     @PostMapping(PLACE_ORDER)
     public ResponseEntity<ResponseDto<OrderResponseDto>> placeOrder(
@@ -30,5 +32,13 @@ public class OrderController {
     ) {
        ResponseDto<OrderResponseDto> response = orderService.placeOrder(userEmail, dto);
        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping(GET_SUMMARY)
+    public ResponseEntity<ResponseDto<List<OrderResponseDto.OrderedItemInfo>>> getOrderSummary(
+        @PathVariable Long orderId
+    ) {
+        ResponseDto<List<OrderResponseDto.OrderedItemInfo>> response = orderService.getOrderSummary(orderId);
+        return ResponseEntity.ok(response);
     }
 }

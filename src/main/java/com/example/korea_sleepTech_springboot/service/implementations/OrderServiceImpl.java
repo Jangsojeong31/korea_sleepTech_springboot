@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -84,4 +85,38 @@ public class OrderServiceImpl implements OrderService {
         return ResponseDto.setSuccess("주문이 성공적으로 완료되었습니다.", data);
 
     }
+
+    @Override
+    public ResponseDto<List<OrderResponseDto.OrderedItemInfo>> getOrderSummary(Long orderId) {
+        List<Object[]> rows = orderRepository.getOrderSummary(orderId);
+
+        List<OrderResponseDto.OrderedItemInfo> summary = new ArrayList<>();
+
+        for (Object[] row: rows) { // Object[] 내 요소들은 모두 Object: summary에 담을 때 형변환이 필요
+            summary.add(OrderResponseDto.OrderedItemInfo.builder()
+                            .productId(( (Number)row[0] ).longValue())
+                            //
+                            .productName((String)row[2]) // 참조타입 Object -> 참조타입 String
+                            .quantity(((Number)row[3]).intValue())
+                            .price(((Number)row[4]).intValue())
+                            .total(((Number)row[5]).intValue())
+                    .build());
+        }
+
+        // Projection 활용
+//        List<OrderRepository.OrderSummaryProjection> orderSummary = orderRepository.getOrderSummary(orderId);
+
+//        List<OrderResponseDto.OrderedItemInfo> summary = orderSummary.stream()
+//                .map(orderSummaryProjection ->
+//                        OrderResponseDto.OrderedItemInfo.builder()
+//                                .productName(orderSummaryProjection.getProductName())
+//                                .quantity(orderSummaryProjection.getQuantity())
+//                                .price(orderSummaryProjection.getPrice())
+//                                .total(orderSummaryProjection.getTotalPrice())
+//                                .build())
+//                .collect(Collectors.toList());
+
+        return ResponseDto.setSuccess("주문 요약 조회 성공", summary);
+    }
+
 }
