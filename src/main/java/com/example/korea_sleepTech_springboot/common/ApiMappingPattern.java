@@ -4,6 +4,8 @@ package com.example.korea_sleepTech_springboot.common;
 // : RESTful하게 API 경로를 규칙적으로 설계하는 것
 // - 각 Controller의 고유 경로를 지정
 public class ApiMappingPattern {
+    public static final String ORDER_API = "api/v1/orders";
+
     public static final String AUTH_API = "api/v1/auth"; // 단수처리
     public static final String USER_API = "api/v1/users";
     public static final String ADMIN_API = "api/v1/admin";
