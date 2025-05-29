@@ -1,4 +1,4 @@
-package com.example.korea_sleepTech_springboot.common;
+package com.example.korea_sleepTech_springboot.common.constants;
 
 // 응답 메시지를 정의하는 클래스
 public class ResponseMessage {

@@ -1,4 +1,4 @@
-package com.example.korea_sleepTech_springboot.common;
+package com.example.korea_sleepTech_springboot.common.constants;
 
 // URL 설계 패턴 (Api Mapping Pattern)
 // : RESTful하게 API 경로를 규칙적으로 설계하는 것
