@@ -12,7 +12,7 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     // 뷰를 직접 조회
-    @Query(value = "SELECT * FROM order_summary WHERE order_id = : orderId", nativeQuery = true)
+    @Query(value = "SELECT * FROM order_summary WHERE order_id = :orderId", nativeQuery = true)
     List<Object[]> getOrderSummary(@Param("orderId") Long orderId);
 
     // Projection 활용

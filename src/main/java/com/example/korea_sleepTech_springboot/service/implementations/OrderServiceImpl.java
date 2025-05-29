@@ -94,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
 
         for (Object[] row: rows) { // Object[] 내 요소들은 모두 Object: summary에 담을 때 형변환이 필요
             summary.add(OrderResponseDto.OrderedItemInfo.builder()
-                            .productId(( (Number)row[0] ).longValue())
+                            .productId(( (Number)row[1] ).longValue())
                             //
                             .productName((String)row[2]) // 참조타입 Object -> 참조타입 String
                             .quantity(((Number)row[3]).intValue())
